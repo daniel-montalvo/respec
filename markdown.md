@@ -121,7 +121,7 @@ interface Paint { };
 ````
 
 ### Links in code blocks
-The markdown parser automatically adds converts any URLs into anchors, including those found in code blocks. 
+The markdown parser automatically converts any URLs into anchors, including those found in code blocks. 
 
 You can turn off that functionality by adding the `.nolinks` css class. Sadly, it means you have to use a `<pre>` element to create a code block.
 
