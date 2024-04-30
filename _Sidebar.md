@@ -55,7 +55,7 @@
 - [charterDisclosureURI](charterDisclosureURI)
 - [copyrightStart](copyrightStart)
 - [crEnd](crEnd)
-- <del>[darkMode]()</del> (deprecated)
+- <del>[darkMode]</del> (deprecated, use [dark mode](dark-mode))
 - [doJsonLd](doJsonLd)
 - [errata](errata)
 - [group](group)
