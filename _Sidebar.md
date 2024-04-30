@@ -55,7 +55,7 @@
 - [charterDisclosureURI](charterDisclosureURI)
 - [copyrightStart](copyrightStart)
 - [crEnd](crEnd)
-- [darkMode](darkMode)
+- <del>[darkMode]()</del> (deprecated)
 - [doJsonLd](doJsonLd)
 - [errata](errata)
 - [group](group)
@@ -100,7 +100,7 @@ Handled by ReSpec for you.
 - [references](references)
 
 ### HTML elements
-
+- [dark mode](dark-mode)
 - [`<figure>`](figure)
 - [`<section>`](section)
 - [`<title>`](title-element)
