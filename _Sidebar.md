@@ -81,6 +81,7 @@
 - [`no-headingless-sections`](no-headingless-sections)
 - [`no-http-props`](no-http-props)
 - [`no-unused-vars`](no-unused-vars)
+- [`no-unused-dfns`](no-unused-dfns)
 - [`privsec-section`](privsec-section)
 - [`wpt-tests-exist`](wpt-tests-exist)
 
