@@ -184,7 +184,18 @@ For W3C documents, the following status are supported.
           <li><a href="previousMaturity">previousMaturity</a></li>
       </td>
     </tr>
-    <tr id="specStatus-rscnd">
+    <tr id="specStatus-disc">
+      <td>DISC</td>
+      <td>
+        Discontinued Draft.
+      </td>
+      <td>
+        <ul>
+          <li><a href="previousPublishDate">previousPublishDate</a></li>
+          <li><a href="previousMaturity">previousMaturity</a></li>
+      </td>
+    </tr>
+    <tr id="specStatus-stmt">
       <td>STMT</td>
       <td>
         Statement.
