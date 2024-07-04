@@ -4,7 +4,7 @@ A boolean used to enable/disable ReSpec's built-in linter for W3C documents. The
 
 - URLs in the config that are not HTTPS.
 - Missing Privacy and/or Security sections.
-- [Possibly other useful things...](https://github.com/w3c/respec/tree/develop/src/core/linter-rules)
+- [Possibly other useful things...](https://github.com/speced/respec/tree/develop/src/core/linter-rules)
 
 If you want to turn off the linter:
 
