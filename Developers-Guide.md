@@ -1,7 +1,7 @@
 As a first step, clone the repository:
 
 ```bash
-git clone git@github.com:w3c/respec.git
+git clone git@github.com:speced/respec.git
 ```
 
 Developing ReSpec requires Node.js v18.14+ and `pnpm` v8+. You can "install" `pnpm` with [`corepack`](https://nodejs.org/docs/latest-v18.x/api/corepack.html) as:
