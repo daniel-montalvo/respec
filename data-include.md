@@ -9,3 +9,5 @@ In the processing pipeline, inclusion happens right after everything to do with 
 ```html "example": "Include content from another file."
 <section data-include="section/theFooElement.html"></section>
 ```
+
+**Note:** When using `data-include`, make sure you open your document with a [static HTTP server running locally](https://gist.github.com/willurd/5720255) (i.e. don't open `file:///` URL, but `http://` or `https://`), otherwise you'll get a network error.
