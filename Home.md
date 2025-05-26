@@ -11,3 +11,4 @@ If you want to hack on ReSpec, we also have a [Developers Guide](Developers-Guid
 ## Getting Support
 
 The official support channel for ReSpec is [spec-prod@w3.org](mailto:spec-prod@w3.org). The [mailing list archives](http://lists.w3.org/Archives/Public/spec-prod/) are available. You can subscribe by sending email to [spec-prod-request@w3.org](mailto:spec-prod-request@w3.org?subject=subscribe) with "subscribe" as the subject line.
+You can also message us on [W3C Community Slack's #respec channel](https://w3ccommunity.slack.com/archives/C01APD1JBSN).
