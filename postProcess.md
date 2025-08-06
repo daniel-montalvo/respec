@@ -5,7 +5,7 @@ Takes an array of JavaScript functions which ReSpec then runs in order. Each fun
 The following examples shows two functions run in order after processing.
 
 ```js "example": "Run two functions in order after processing."
-function doThing(config, doc, utils){...}
+async function doThing(config, doc, utils){...}
 function doOtherThing(config, doc, utils){...}
 
 var respecConfig = {
