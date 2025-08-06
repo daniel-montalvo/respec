@@ -4,7 +4,7 @@ Expects an array of JavaScript functions. ReSpec invokes these functions in orde
 
 ```js "example": "Run two functions in order before processing."
 function doThing(config, document, utils){...}
-function doOtherThing(config, document, utils){...}
+async function doOtherThing(config, document, utils){...}
 
 var respecConfig = {
   // Before processing, run the following
