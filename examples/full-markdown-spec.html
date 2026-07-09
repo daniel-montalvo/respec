@@ -1,0 +1,74 @@
+!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="/builds/respec-w3c.js" async class="remove"></script>
+    <script class="remove">
+      // All config options at https://respec.org/docs/
+      var respecConfig = {
+        format: "markdown",
+        // Working Groups ids at https://respec.org/w3c/groups/
+        group: "aria",
+        specStatus: "unofficial",
+        editors: [
+          {
+            name: "Your Name",
+            url: "http://your-site.com",
+          },
+        ],
+        github: {
+          branch: "main",
+          repoURL: "daniel-montalvo/respec",
+        },
+        // See https://respec.org/docs/#xref for usage.
+        xref: "web-platform",
+      };
+    </script>
+  </head>
+  <body>
+    <h1 id="title">Spec using markdown directives</h1>
+    <section id="abstract">
+      <p>This is required.</p>
+
+      Some more markdown paragraphs. Here and there. :::{.note} This is a note.
+      No nested examples ::: ::::{.note title="note with nested example"} This
+      note contains a nested example. :::aside{.example title="example title"}
+      This is the example ::: :::: :::{.note title="note with html entities"}
+      Note with html entities: &lt;div&gt; &amp; &quot; &apos; ::: :::{.note
+      title="note with some code items in the title <code>img</code>"} note body
+      ::: :::{.issue data-number="1"} This is an issue reference :::
+    </section>
+    <section id="sotd">
+      <p>This is required.</p>
+    </section>
+    <section id="introduction">
+      ## [W3C](https://www.w3.org) This is to try links within headings using
+      markdown
+    </section>
+    <section data-dfn-for="Foo">
+      <h2>Start your spec!</h2>
+      <pre class="idl">
+      [Exposed=Window]
+      interface Foo {
+        attribute DOMString bar;
+        undefined doTheFoo();
+      };
+      </pre>
+      <section>
+        <h2><dfn>bar</dfn> attribute</h2>
+        <p>When getting, the {{Foo/bar}} attribute returns you a 🍹.</p>
+      </section>
+      <section>
+        <h2><dfn>doTheFoo()</dfn> method</h2>
+        <p>When called, {{Foo/doTheFoo()}} MUST behave as follows:</p>
+        <ol class="algorithm">
+          <li>If <var>thing</var>....</li>
+          <li>Let <var>someProp</var>... of the [[DOM]] spec.</li>
+        </ol>
+      </section>
+    </section>
+    <section id="conformance">
+      <!-- This section is filled automatically by ReSpec. -->
+    </section>
+  </body>
+</html>

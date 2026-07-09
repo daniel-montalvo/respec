@@ -12,6 +12,10 @@ import {
   Rule as _CddlRule,
   Type as _CddlType,
 } from "../../node_modules/cddlparser/dist/ast.js";
+import {
+  createDirectives as _createDirectives,
+  presetDirectiveConfigs as _presetDirectiveConfigs,
+} from "../../node_modules/marked-directive/dist/index.js";
 import { Parser as _CddlParser } from "../../node_modules/cddlparser/dist/parser.js";
 import { MIMEType as _MIMEType } from "../../node_modules/sniffy-mimetype/index.js";
 import { marked as _marked } from "../../node_modules/marked/lib/marked.esm.js";
@@ -21,6 +25,8 @@ import hyperHTML from "../../node_modules/hyperhtml/esm.js";
 export const html = hyperHTML;
 export const idb = _idb;
 export const marked = _marked;
+export const createDirectives = _createDirectives;
+export const presetDirectiveConfigs = _presetDirectiveConfigs;
 export const MIMEType = _MIMEType;
 export const pluralize = _pluralize;
 export const webidl2 = _webidl2;

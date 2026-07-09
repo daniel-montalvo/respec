@@ -5,6 +5,8 @@ const colors = require("colors");
 const { readFileSync } = require("fs");
 const path = require("path");
 const rollup = require("rollup");
+const resolve = require("@rollup/plugin-node-resolve").default;
+const commonjs = require("@rollup/plugin-commonjs");
 
 /** @param {{ entries: Array<{ find: string | RegExp, replacement: string }> }} opts */
 function alias({ entries }) {
@@ -77,6 +79,11 @@ const Builder = {
         alias({
           entries: [{ find: /^text!(.*)/, replacement: "./$1" }],
         }),
+        resolve({
+          browser: true,
+          preferBuiltins: false,
+        }),
+        commonjs(),
         string({
           include: [/\.runtime\.js$/, /\.svg$/, /respec-worker\.js$/],
         }),

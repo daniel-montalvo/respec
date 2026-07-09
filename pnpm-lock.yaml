@@ -42,6 +42,9 @@ importers:
       marked:
         specifier: ^18.0.5
         version: 18.0.5
+      marked-directive:
+        specifier: ^1.0.7
+        version: 1.0.7(marked@18.0.5)
       puppeteer:
         specifier: ^25.1.0
         version: 25.1.0
@@ -650,6 +653,9 @@ packages:
 
   async@3.2.3:
     resolution: {integrity: sha512-spZRyzKL5l5BZQrr/6m/SqFdBN0q3OCI0f9rjfBzCMBIP4p75P620rR3gTmaksNOhmzgdxcaxdNfMy6anrbM0g==}
+
+  attributes-parser@2.2.3:
+    resolution: {integrity: sha512-zjOUWt95la8AdUO+kP1GBOonWrV5jy9NjJP+z9tva/DSA6FIzGKcN/gk3tdqQf/pOeB8dkyd3FCPrjhELMmrkg==}
 
   available-typed-arrays@1.0.7:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
@@ -1607,6 +1613,9 @@ packages:
   json-buffer@3.0.1:
     resolution: {integrity: sha512-4bV5BfR2mqfQTJm+V5tPPdf+ZpuhiIvTuAB5g8kcrXOZpTT/QwwVRWBywX1ozr6lEuPdbHxwaJlm9G6mI2sfSQ==}
 
+  json-loose@1.2.4:
+    resolution: {integrity: sha512-lwMWNC5pvVI33rhYWmAsmtICWE2IH7euDY/iIPeMFE5AuzAifYgqQrjqSMzwbrFV6MWPs41XD+CajElHI4cZMQ==}
+
   json-schema-traverse@0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
 
@@ -1720,6 +1729,11 @@ packages:
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
 
+  marked-directive@1.0.7:
+    resolution: {integrity: sha512-2OilBJg5kSM0b7ijKlmIne8k1eA1YrNAWasw84fmfihgWuOQJFPmI5GzZd3DgM8PSquAKnYx87Qt5j/2Sw7JNA==}
+    peerDependencies:
+      marked: '>=7.0.0'
+
   marked@18.0.5:
     resolution: {integrity: sha512-S6GcvALHg6K4ohtu4E7x0a1AqhAjp6cV8KhLSyN9qVapnzJkusVBxZRcIU9AeYsbe6P1hKDusSbEOzGyyuce6w==}
     engines: {node: '>= 20'}
@@ -1800,6 +1814,9 @@ packages:
   modern-tar@0.7.6:
     resolution: {integrity: sha512-sweCIVXzx1aIGTCdzcMlSZt1h8k5Tmk08VNAuRk3IU28XamGiOH5ypi11g6De2CH7PhYqSSnGy2A/EFhbWnVKg==}
     engines: {node: '>=18.0.0'}
+
+  moo@0.5.3:
+    resolution: {integrity: sha512-m2fmM2dDm7GZQsY7KK2cme8agi+AAljILjQnof7p1ZMDe6dQ4bdnSMx0cPppudoeNv5hEFQirN6u+O4fDE0IWA==}
 
   mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
@@ -2989,6 +3006,10 @@ snapshots:
 
   async@3.2.3: {}
 
+  attributes-parser@2.2.3:
+    dependencies:
+      json-loose: 1.2.4
+
   available-typed-arrays@1.0.7:
     dependencies:
       possible-typed-array-names: 1.0.0
@@ -4033,6 +4054,10 @@ snapshots:
 
   json-buffer@3.0.1: {}
 
+  json-loose@1.2.4:
+    dependencies:
+      moo: 0.5.3
+
   json-schema-traverse@0.4.1: {}
 
   json-schema-traverse@1.0.0: {}
@@ -4189,6 +4214,11 @@ snapshots:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
 
+  marked-directive@1.0.7(marked@18.0.5):
+    dependencies:
+      attributes-parser: 2.2.3
+      marked: 18.0.5
+
   marked@18.0.5: {}
 
   math-intrinsics@1.1.0: {}
@@ -4248,6 +4278,8 @@ snapshots:
       minimist: 1.2.8
 
   modern-tar@0.7.6: {}
+
+  moo@0.5.3: {}
 
   mri@1.2.0: {}
 

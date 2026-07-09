@@ -11,8 +11,12 @@
  *
  */
 
+import {
+  createDirectives,
+  marked,
+  presetDirectiveConfigs,
+} from "./import-maps.js";
 import { getElementIndentation } from "./utils.js";
-import { marked } from "./import-maps.js";
 
 export const name = "core/markdown";
 
@@ -107,6 +111,14 @@ const config = {
   gfm: true,
   renderer: /** @type {any} */ (new Renderer()),
 };
+
+marked.use(
+  createDirectives([
+    ...presetDirectiveConfigs,
+    { level: "container", marker: ":::::" },
+    { level: "container", marker: "::::" },
+  ])
+);
 
 /**
  * Normalize indentation by stripping the leading whitespace determined from
