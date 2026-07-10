@@ -115,8 +115,9 @@ const config = {
 marked.use(
   createDirectives([
     ...presetDirectiveConfigs,
-    { level: "container", marker: ":::::" },
     { level: "container", marker: "::::" },
+    { level: "container", marker: ":::::" },
+    { level: "container", marker: "::::::" },
   ])
 );
 
