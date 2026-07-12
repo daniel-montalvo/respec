@@ -112,12 +112,32 @@ const config = {
   renderer: /** @type {any} */ (new Renderer()),
 };
 
+// custom directives for respec CSS especial classes
+const containerCSSClasses = new Set([
+  "note",
+  "issue",
+  "ednote",
+  "example",
+  "illegal-example",
+  "warning",
+]);
+
 marked.use(
   createDirectives([
-    ...presetDirectiveConfigs,
-    { level: "container", marker: "::::" },
-    { level: "container", marker: ":::::" },
-    { level: "container", marker: "::::::" },
+    ...presetDirectiveConfigs, // Load presets first
+    {
+      level: "container",
+      marker: ":::",
+      renderer(token) {
+        const name = token.meta.name || "";
+
+        // If the directive name isn't one of ours, let presets handle it
+        if (!containerCSSClasses.has(name)) return false;
+
+        const innerHtml = this.parser.parse(token.tokens || []);
+        return `<div class="${name}">\n${innerHtml}</div>`;
+      },
+    },
   ])
 );
 
