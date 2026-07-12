@@ -138,6 +138,19 @@ marked.use(
         return `<div class="${name}">\n${innerHtml}</div>`;
       },
     },
+    {
+      level: "container",
+      marker: "\\+\\+\\+",
+      renderer(token) {
+        const name = token.meta.name || "";
+
+        // If the directive name isn't one of ours, let presets handle it
+        if (!containerCSSClasses.has(name)) return false;
+
+        const innerHtml = this.parser.parse(token.tokens || []);
+        return `<div class="${name}">\n${innerHtml}</div>`;
+      },
+    },
   ])
 );
 
