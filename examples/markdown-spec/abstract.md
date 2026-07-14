@@ -3,9 +3,9 @@
 The abstract.
 
 :::note
-The note
+The note with a custom directive
 +++example
-The example
+The example inside the note
 +++
 :::
 
@@ -19,11 +19,4 @@ The warning
 
 :::ednote
 The editors note
-:::
-:::section{#abstract-1 .sub-class}
-
-### Awesome heading
-
-Awesome paragraph.
-
 :::
