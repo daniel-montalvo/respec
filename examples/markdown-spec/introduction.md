@@ -2,6 +2,6 @@
 
 The intro paragraph.
 
-## Intro sub section
+### Intro sub section
 
 The paragraph of the intro sub section
