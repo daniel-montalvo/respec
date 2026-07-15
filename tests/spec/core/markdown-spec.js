@@ -683,4 +683,106 @@ function getAnswer() {
       expect(title).toContain(headingTitles.shift());
     }
   });
+
+  describe("directives", () => {
+    // Tests for ::: and +++ container directive syntax
+
+    const markers = [":::", "+++"];
+
+    for (const marker of markers) {
+      describe(`marker "${marker}"`, () => {
+        it("renders known classes as <div> with the correct class", async () => {
+          const classes = ["note", "issue", "ednote", "example", "warning"];
+          for (const cls of classes) {
+            const body = `
+              <section data-format="markdown" id="test">
+
+              ${marker}${cls}
+              Some content.
+              ${marker}
+
+              </section>
+            `;
+            const ops = makeStandardOps({}, body);
+            const doc = await makeRSDoc(ops);
+            const el = doc.querySelector(`#test div.${cls}`);
+            expect(el)
+              .withContext(
+                `expected <div class="${cls}"> for marker "${marker}"`
+              )
+              .not.toBeNull();
+          }
+        });
+
+        it("passes extra attributes to the rendered element", async () => {
+          const body = `
+            <section data-format="markdown" id="test">
+
+            ${marker}note{title="My note" id="n1"}
+            Content.
+            ${marker}
+
+            </section>
+          `;
+          const ops = makeStandardOps({}, body);
+          const doc = await makeRSDoc(ops);
+          const el = doc.querySelector("#test div.note");
+          expect(el).not.toBeNull();
+          expect(el.getAttribute("title")).toBe("My note");
+          expect(el.id).toBe("n1");
+        });
+
+        it("merges an extra class from attrs with the base class", async () => {
+          const body = `
+            <section data-format="markdown" id="test">
+
+            ${marker}note{class="extra"}
+            Content.
+            ${marker}
+
+            </section>
+          `;
+          const ops = makeStandardOps({}, body);
+          const doc = await makeRSDoc(ops);
+          const el = doc.querySelector("#test div.note");
+          expect(el).not.toBeNull();
+          expect(el.classList).toContain("extra");
+        });
+
+        it("ignores unknown directive names and lets presets handle them", async () => {
+          const body = `
+            <section data-format="markdown" id="test">
+
+            ${marker}unknown
+            Content.
+            ${marker}
+
+            </section>
+          `;
+          const ops = makeStandardOps({}, body);
+          const doc = await makeRSDoc(ops);
+          // Should NOT produce a respec-styled div
+          expect(doc.querySelector("#test div.unknown")).toBeNull();
+        });
+
+        it("renders markdown content inside the directive", async () => {
+          const body = `
+            <section data-format="markdown" id="test">
+
+            ${marker}note
+            **bold** and _italic_
+            ${marker}
+
+            </section>
+          `;
+          const ops = makeStandardOps({}, body);
+          const doc = await makeRSDoc(ops);
+          const el = doc.querySelector("#test div.note");
+          expect(el).not.toBeNull();
+          expect(el.querySelector("strong")).not.toBeNull();
+          expect(el.querySelector("em")).not.toBeNull();
+        });
+      });
+    }
+  });
 });

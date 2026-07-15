@@ -112,15 +112,35 @@ const config = {
   renderer: /** @type {any} */ (new Renderer()),
 };
 
+/**
+ * Serializes a directive's attrs object into an HTML attribute string,
+ * merging any extra `class` value with the base cssClass.
+ * @param {string} cssClass
+ * @param {Record<string, unknown> | undefined} attrs
+ */
+function buildAttrs(cssClass, attrs) {
+  if (!attrs) return `class="${cssClass}"`;
+  const extraClass = typeof attrs.class === "string" ? ` ${attrs.class}` : "";
+  const rest = Object.entries(attrs)
+    .filter(([k, v]) => k !== "class" && v !== null && v !== false)
+    .map(([k, v]) =>
+      v === true ? k : `${k}="${String(v).replace(/"/g, "&quot;")}"`
+    )
+    .join(" ");
+  const classPart = `class="${cssClass}${extraClass}"`;
+  return rest ? `${classPart} ${rest}` : classPart;
+}
+
 // custom directives for respec CSS especial classes
-const containerCSSClasses = new Set([
-  "note",
-  "issue",
-  "ednote",
-  "example",
-  "illegal-example",
-  "warning",
-]);
+/** @type {Record<string, {class: string, tag: string}>} */
+const containerCSSClasses = {
+  note: { class: "note", tag: "div" },
+  issue: { class: "issue", tag: "div" },
+  ednote: { class: "ednote", tag: "div" },
+  example: { class: "example", tag: "div" },
+  "illegal-example": { class: "illegal-example", tag: "div" },
+  warning: { class: "warning", tag: "div" },
+};
 
 marked.use(
   createDirectives([
@@ -132,10 +152,12 @@ marked.use(
         const name = token.meta.name || "";
 
         // If the directive name isn't one of ours, let presets handle it
-        if (!containerCSSClasses.has(name)) return false;
+        if (!Object.hasOwn(containerCSSClasses, name)) return false;
 
+        const { class: cssClass, tag } = containerCSSClasses[name];
         const innerHtml = this.parser.parse(token.tokens || []);
-        return `<div class="${name}">\n${innerHtml}</div>`;
+        const attrsStr = buildAttrs(cssClass, token.attrs);
+        return `<${tag} ${attrsStr}>\n${innerHtml}</${tag}>`;
       },
     },
     {
@@ -145,10 +167,12 @@ marked.use(
         const name = token.meta.name || "";
 
         // If the directive name isn't one of ours, let presets handle it
-        if (!containerCSSClasses.has(name)) return false;
+        if (!Object.hasOwn(containerCSSClasses, name)) return false;
 
+        const { class: cssClass, tag } = containerCSSClasses[name];
         const innerHtml = this.parser.parse(token.tokens || []);
-        return `<div class="${name}">\n${innerHtml}</div>`;
+        const attrsStr = buildAttrs(cssClass, token.attrs);
+        return `<${tag} ${attrsStr}>\n${innerHtml}</${tag}>`;
       },
     },
   ])
