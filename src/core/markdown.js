@@ -114,21 +114,22 @@ const config = {
 
 /**
  * Serializes a directive's attrs object into an HTML attribute string,
- * merging any extra `class` value with the base cssClass.
+ * adding any additional `class` value with the base cssClass.
  * @param {string} cssClass
  * @param {Record<string, unknown> | undefined} attrs
  */
 function buildAttrs(cssClass, attrs) {
   if (!attrs) return `class="${cssClass}"`;
-  const extraClass = typeof attrs.class === "string" ? ` ${attrs.class}` : "";
+  const additionalClass =
+    typeof attrs.class === "string" ? ` ${attrs.class}` : "";
   const rest = Object.entries(attrs)
     .filter(([k, v]) => k !== "class" && v !== null && v !== false)
     .map(([k, v]) =>
       v === true ? k : `${k}="${String(v).replace(/"/g, "&quot;")}"`
     )
     .join(" ");
-  const classPart = `class="${cssClass}${extraClass}"`;
-  return rest ? `${classPart} ${rest}` : classPart;
+  const classes = `class="${cssClass}${additionalClass}"`;
+  return rest ? `${classes} ${rest}` : classes;
 }
 
 // custom directives for respec CSS especial classes
@@ -137,8 +138,8 @@ const containerCSSClasses = {
   note: { class: "note", tag: "div" },
   issue: { class: "issue", tag: "div" },
   ednote: { class: "ednote", tag: "div" },
-  example: { class: "example", tag: "div" },
-  "illegal-example": { class: "illegal-example", tag: "div" },
+  example: { class: "example", tag: "aside" },
+  "illegal-example": { class: "illegal-example", tag: "pre" },
   warning: { class: "warning", tag: "div" },
 };
 
@@ -151,7 +152,7 @@ marked.use(
       renderer(token) {
         const name = token.meta.name || "";
 
-        // If the directive name isn't one of ours, let presets handle it
+        // If the directive name isn't one of the container classes, let presets handle it
         if (!Object.hasOwn(containerCSSClasses, name)) return false;
 
         const { class: cssClass, tag } = containerCSSClasses[name];
