@@ -112,44 +112,55 @@ const config = {
   renderer: /** @type {any} */ (new Renderer()),
 };
 
-// custom directives for respec CSS especial classes
-const containerCSSClasses = new Set([
-  "note",
-  "issue",
-  "ednote",
-  "example",
-  "illegal-example",
-  "warning",
-]);
+/**
+ * @this {any}
+ * @param {any} token
+ */
+function customDirectiveRenderer(token) {
+  const especialClasses = {
+    note: "div",
+    example: "aside",
+    ednote: "div",
+  };
 
+  const customDirectiveName = token.meta?.name;
+  const htmlTag = especialClasses[customDirectiveName];
+  if (!htmlTag) {
+    return false;
+  }
+
+  // Ensure attrs object exists
+  token.attrs = token.attrs || {};
+
+  // Update or set class attribute
+  token.attrs.class = token.attrs.class
+    ? `${token.attrs.class} ${customDirectiveName}`
+    : customDirectiveName;
+
+  // Use Marked's built-in Parser instance to process inner tokens
+  const innerHTML = this.parser.parse(token.tokens);
+
+  // Convert attrs object into standard HTML key="value" string
+  const attrEntries = Object.entries(token.attrs)
+    .map(([key, val]) => `${key}="${val}"`)
+    .join(" ");
+
+  const attrs = attrEntries ? ` ${attrEntries}` : "";
+
+  return `<${htmlTag}${attrs}>${innerHTML}</${htmlTag}>`;
+}
 marked.use(
   createDirectives([
     ...presetDirectiveConfigs, // Load presets first
     {
       level: "container",
       marker: ":::",
-      renderer(token) {
-        const name = token.meta.name || "";
-
-        // If the directive name isn't one of ours, let presets handle it
-        if (!containerCSSClasses.has(name)) return false;
-
-        const innerHtml = this.parser.parse(token.tokens || []);
-        return `<div class="${name}">\n${innerHtml}</div>`;
-      },
+      renderer: customDirectiveRenderer,
     },
     {
       level: "container",
       marker: "\\+\\+\\+",
-      renderer(token) {
-        const name = token.meta.name || "";
-
-        // If the directive name isn't one of ours, let presets handle it
-        if (!containerCSSClasses.has(name)) return false;
-
-        const innerHtml = this.parser.parse(token.tokens || []);
-        return `<div class="${name}">\n${innerHtml}</div>`;
-      },
+      renderer: customDirectiveRenderer,
     },
   ])
 );
