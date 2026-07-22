@@ -118,9 +118,11 @@ const config = {
  */
 function customDirectiveRenderer(token) {
   const especialClasses = {
-    note: "div",
-    example: "aside",
     ednote: "div",
+    example: "aside",
+    "illegal-example": "aside",
+    note: "div",
+    warning: "div",
   };
 
   const customDirectiveName = token.meta?.name;

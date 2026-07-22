@@ -2,12 +2,17 @@
 
 The abstract.
 
+:::ednote
+This is an ednote
+:::
+
 :::note
 The note with a custom directive
-+++example
-The example inside the note
-+++
 :::
+
++++example{#exampleone}
+The example
++++
 
 :::issue
 The issue
@@ -17,6 +22,6 @@ The issue
 The warning
 :::
 
-:::ednote
-The editors note
+:::div{.ednote}
+The ednote with default configs
 :::
