@@ -118,10 +118,13 @@ const config = {
  */
 function customDirectiveRenderer(token) {
   const especialClasses = {
+    atRisk: "div",
     ednote: "div",
     example: "aside",
     "illegal-example": "aside",
+    issue: "aside",
     note: "div",
+    practice: "div",
     warning: "div",
   };
 
