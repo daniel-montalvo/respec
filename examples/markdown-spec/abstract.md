@@ -3,7 +3,7 @@
 The abstract.
 
 :::ednote
-This is an ednote
+This is an ednote with custom directive configs
 :::
 
 :::note
@@ -23,5 +23,5 @@ The warning
 :::
 
 :::div{.ednote}
-The ednote with default configs
+The ednote with preset directive configs
 :::
