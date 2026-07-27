@@ -290,5 +290,31 @@ describe("Core — Data Include", () => {
 
       expect(doc.querySelector("#includes .note")).toBeFalsy();
     });
+
+    it("processes markdown directives in included markdown", async () => {
+      const includeBody = `
+      :::note
+      From include
+      :::
+
+      This is a :span{.classname}[inline include].
+    `;
+      const body = `<section
+      id="includes"
+      data-include-format="markdown"
+      data-include="${generateDataUrl(includeBody)}"
+    ></section>`;
+
+      const ops = makeStandardOps(null, body);
+      const doc = await makeRSDoc(ops);
+
+      const note = doc.querySelector("#includes div.note");
+      expect(note).toBeTruthy();
+      expect(note.textContent).toContain("From include");
+
+      const inlineDirective = doc.querySelector("#includes span.classname");
+      expect(inlineDirective).toBeTruthy();
+      expect(inlineDirective.textContent).toBe("inline include");
+    });
   });
 });

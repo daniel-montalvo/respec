@@ -50,6 +50,61 @@ describe("Core - Markdown", () => {
     expect(doc.querySelector(".issue p em")).toBeTruthy();
   });
 
+  it("processes markdown directives", async () => {
+    const body = `
+      ## Directives
+
+      :::note
+      The note
+      :::
+
+      :::ednote
+      The ednote with custom directive configs
+      :::
+
+      +++example{#exampleone}
+      The example
+      +++
+
+      :::issue
+      The issue
+      :::
+
+      :::warning
+      The warning
+      :::
+
+      :::div{.ednote}
+      The ednote with preset directive configs
+      :::
+
+      This is a :span{.classname}[inline directive].
+    `;
+    const ops = makeStandardOps({ format: "markdown" }, body);
+    ops.abstract = null;
+    const doc = await makeRSDoc(ops);
+
+    const note = doc.querySelector("div.note");
+    expect(note).toBeTruthy();
+    expect(note.textContent).toContain("The note");
+
+    const ednotes = doc.querySelectorAll("div.ednote");
+    expect(ednotes).toHaveSize(2);
+    expect(ednotes[0].textContent).toContain("custom directive configs");
+    expect(ednotes[1].textContent).toContain("preset directive configs");
+
+    const example = doc.querySelector("aside#exampleone.example");
+    expect(example).toBeTruthy();
+    expect(example.textContent).toContain("The example");
+
+    expect(doc.querySelector("aside.issue")).toBeTruthy();
+    expect(doc.querySelector("div.warning")).toBeTruthy();
+
+    const inlineDirective = doc.querySelector("span.classname");
+    expect(inlineDirective).toBeTruthy();
+    expect(inlineDirective.textContent).toBe("inline directive");
+  });
+
   it("removes left padding before processing markdown content", async () => {
     const body = `
 

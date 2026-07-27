@@ -15,7 +15,7 @@ import {
 import {
   createDirectives as _createDirectives,
   presetDirectiveConfigs as _presetDirectiveConfigs,
-} from "../../node_modules/marked-directive/dist/index.js";
+} from "../../js/deps/builds/marked-directive.js";
 import { Parser as _CddlParser } from "../../node_modules/cddlparser/dist/parser.js";
 import { MIMEType as _MIMEType } from "../../node_modules/sniffy-mimetype/index.js";
 import { marked as _marked } from "../../node_modules/marked/lib/marked.esm.js";
