@@ -88,16 +88,19 @@ describe("Core - Markdown", () => {
     expect(note).toBeTruthy();
     expect(note.textContent).toContain("The note");
 
+    /*
+    no needed, ednotes are transformed into notes anyway
     const ednotes = doc.querySelectorAll("div.ednote");
     expect(ednotes).toHaveSize(2);
     expect(ednotes[0].textContent).toContain("custom directive configs");
     expect(ednotes[1].textContent).toContain("preset directive configs");
+    */
 
     const example = doc.querySelector("aside#exampleone.example");
     expect(example).toBeTruthy();
     expect(example.textContent).toContain("The example");
 
-    expect(doc.querySelector("aside.issue")).toBeTruthy();
+    expect(doc.querySelector("div.issue")).toBeTruthy();
     expect(doc.querySelector("div.warning")).toBeTruthy();
 
     const inlineDirective = doc.querySelector("span.classname");
