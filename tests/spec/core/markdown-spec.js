@@ -50,58 +50,145 @@ describe("Core - Markdown", () => {
     expect(doc.querySelector(".issue p em")).toBeTruthy();
   });
 
-  it("processes markdown directives", async () => {
-    const body = `
-      ## Directives
-
-      :::note
-      The note
-      :::
-
-      :::ednote
-      The ednote with custom directive configs
-      :::
-
-      +++example{#exampleone}
-      The example
-      +++
-
-      :::issue
-      The issue
-      :::
-
-      :::warning
-      The warning
-      :::
-
-      :::div{.ednote}
-      The ednote with preset directive configs
-      :::
-
-      This is a :span{.classname}[inline directive].
-    `;
+  it("processes the atRisk custom directive", async () => {
+    const body = `+++atRisk
+The atRisk
++++`;
     const ops = makeStandardOps({ format: "markdown" }, body);
     ops.abstract = null;
     const doc = await makeRSDoc(ops);
 
-    const note = doc.querySelector("div.note");
-    expect(note).toBeTruthy();
-    expect(note.textContent).toContain("The note");
+    const element = doc.querySelector("div.atRisk");
+    expect(element).toBeTruthy();
+    expect(element.textContent).toContain("The atRisk");
+  });
 
-    /*
-    no needed, ednotes are transformed into notes anyway
-    const ednotes = doc.querySelectorAll("div.ednote");
-    expect(ednotes).toHaveSize(2);
-    expect(ednotes[0].textContent).toContain("custom directive configs");
-    expect(ednotes[1].textContent).toContain("preset directive configs");
-    */
+  it("processes the ednote custom directive", async () => {
+    const body = `+++ednote
+The ednote
++++`;
+    const ops = makeStandardOps({ format: "markdown" }, body);
+    ops.abstract = null;
+    const doc = await makeRSDoc(ops);
 
-    const example = doc.querySelector("aside#exampleone.example");
-    expect(example).toBeTruthy();
-    expect(example.textContent).toContain("The example");
+    const element = doc.querySelector("div.note");
+    expect(element).toBeTruthy();
+    expect(element.textContent).toContain("The ednote");
+  });
 
-    expect(doc.querySelector("div.issue")).toBeTruthy();
-    expect(doc.querySelector("div.warning")).toBeTruthy();
+  it("processes the example custom directive", async () => {
+    const body = `+++example
+The example
++++`;
+    const ops = makeStandardOps({ format: "markdown" }, body);
+    ops.abstract = null;
+    const doc = await makeRSDoc(ops);
+
+    const element = doc.querySelector("div.example > pre");
+    expect(element).toBeTruthy();
+    expect(element.textContent).toContain("The example");
+  });
+
+  it("processes the illegal-example custom directive", async () => {
+    const body = `+++illegal-example
+The illegal-example
++++`;
+    const ops = makeStandardOps({ format: "markdown" }, body);
+    ops.abstract = null;
+    const doc = await makeRSDoc(ops);
+
+    const element = doc.querySelector("div.example > pre");
+    expect(element).toBeTruthy();
+    expect(element.textContent).toContain("The illegal-example");
+  });
+
+  it("processes the issue custom directive", async () => {
+    const body = `+++issue
+The issue
++++`;
+    const ops = makeStandardOps({ format: "markdown" }, body);
+    ops.abstract = null;
+    const doc = await makeRSDoc(ops);
+
+    const element = doc.querySelector("div.issue");
+    expect(element).toBeTruthy();
+    expect(element.textContent).toContain("The issue");
+  });
+
+  it("processes the note custom directive", async () => {
+    const body = `+++note
+The note
++++`;
+    const ops = makeStandardOps({ format: "markdown" }, body);
+    ops.abstract = null;
+    const doc = await makeRSDoc(ops);
+
+    const element = doc.querySelector("div.note");
+    expect(element).toBeTruthy();
+    expect(element.textContent).toContain("The note");
+  });
+
+  it("processes the practice custom directive", async () => {
+    const body = `+++practice
+The practice
++++`;
+    const ops = makeStandardOps({ format: "markdown" }, body);
+    ops.abstract = null;
+    const doc = await makeRSDoc(ops);
+
+    const element = doc.querySelector("div.practice");
+    expect(element).toBeTruthy();
+    expect(element.textContent).toContain("The practice");
+  });
+
+  it("processes the warning custom directive", async () => {
+    const body = `+++warning
+The warning
++++`;
+    const ops = makeStandardOps({ format: "markdown" }, body);
+    ops.abstract = null;
+    const doc = await makeRSDoc(ops);
+
+    const element = doc.querySelector("div.warning");
+    expect(element).toBeTruthy();
+    expect(element.textContent).toContain("The warning");
+  });
+
+  it("processes an issue custom directive with a title", async () => {
+    const body = `## Directives
+
+:::issue{title="Issue title"}
+The issue
+:::
+`;
+    const ops = makeStandardOps({ format: "markdown" }, body);
+    ops.abstract = null;
+    const doc = await makeRSDoc(ops);
+
+    const issue = doc.querySelector("div.issue");
+    expect(issue).toBeTruthy();
+    expect(issue.textContent).toContain("Issue title");
+    expect(issue.textContent).toContain("The issue");
+  });
+
+  it("processes a preset custom directive", async () => {
+    const body = `:::div{.ednote}
+The ednote with preset directive configs
+:::`;
+    const ops = makeStandardOps({ format: "markdown" }, body);
+    ops.abstract = null;
+    const doc = await makeRSDoc(ops);
+
+    const ednote = doc.querySelector("div.note");
+    expect(ednote).toBeTruthy();
+    expect(ednote.textContent).toContain("preset directive configs");
+  });
+
+  it("processes an inline custom directive", async () => {
+    const body = "This is a :span{.classname}[inline directive].";
+    const ops = makeStandardOps({ format: "markdown" }, body);
+    ops.abstract = null;
+    const doc = await makeRSDoc(ops);
 
     const inlineDirective = doc.querySelector("span.classname");
     expect(inlineDirective).toBeTruthy();

@@ -120,9 +120,9 @@ function customDirectiveRenderer(token) {
   const especialClasses = {
     atRisk: "div",
     ednote: "div",
-    example: "aside",
-    "illegal-example": "aside",
-    issue: "aside",
+    example: "pre",
+    "illegal-example": "pre",
+    issue: "div",
     note: "div",
     practice: "div",
     warning: "div",
