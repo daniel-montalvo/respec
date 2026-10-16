@@ -10,6 +10,7 @@ import { biblio } from "./biblio.js";
 import css from "../styles/dfn-index.css.js";
 import { getTermFromElement } from "./xref.js";
 import { html } from "./import-maps.js";
+import { insertStyle } from "./insert-style.js";
 import { renderInlineCitation } from "./render-biblio.js";
 import { sub } from "./pubsubhub.js";
 import { toCiteDetails } from "./data-cite.js";
@@ -100,14 +101,10 @@ const CODE_TYPES = new Set([
 export function run() {
   const index = document.querySelector("section#index");
   if (!index) {
-    // See below...
-    sub("toc", () => {}, { once: true });
     return;
   }
 
-  const styleEl = document.createElement("style");
-  styleEl.textContent = css;
-  document.head.appendChild(styleEl);
+  insertStyle(css);
 
   index.classList.add("appendix");
   if (!index.querySelector("h2, h1")) {
@@ -129,13 +126,12 @@ export function run() {
     addId(el, "index-term");
   }
 
-  // XXX: This event is used to overcome an edge case with core/structure,
-  // related to a circular dependency in plugin run order. We want
-  // core/structure to run after dfn-index so the #index can be listed in the
-  // TOC, but we also want section numbers in dfn-index. So, we "split"
-  // core/dfn-index in two parts, one that runs before core/structure (using
-  // plugin order in profile) and the other (following) after section numbers
-  // are generated in core/structure (this event).
+  // core/dfn-index runs before core/structure (per profile order) so that
+  // #index appears in the ToC. But section numbers are only assigned by
+  // core/structure. We resolve this ordering dependency via the "toc" event:
+  // core/structure emits it after completing section processing and numbering
+  // (and any ToC generation), at which point we annotate local index entries
+  // with their section numbers.
   sub("toc", appendSectionNumbers, { once: true });
 
   sub("beforesave", cleanup);

@@ -117,6 +117,7 @@ const config = {
  * @param {any} token
  */
 function customDirectiveRenderer(token) {
+  /** @type {Record<string, string>} */
   const especialClasses = {
     atRisk: "div",
     ednote: "div",
@@ -154,21 +155,22 @@ function customDirectiveRenderer(token) {
 
   return `<${htmlTag}${attrs}>${innerHTML}</${htmlTag}>`;
 }
-marked.use(
-  createDirectives([
-    ...presetDirectiveConfigs, // Load presets first
-    {
-      level: "container",
-      marker: ":::",
-      renderer: customDirectiveRenderer,
-    },
-    {
-      level: "container",
-      marker: "\\+\\+\\+",
-      renderer: customDirectiveRenderer,
-    },
-  ])
-);
+// The typings omit `renderer`, which the library supports.
+/** @type {any[]} */
+const directiveConfigs = [
+  ...presetDirectiveConfigs, // Load presets first
+  {
+    level: "container",
+    marker: ":::",
+    renderer: customDirectiveRenderer,
+  },
+  {
+    level: "container",
+    marker: "\\+\\+\\+",
+    renderer: customDirectiveRenderer,
+  },
+];
+marked.use(createDirectives(directiveConfigs));
 
 /**
  * Normalize indentation by stripping the leading whitespace determined from
